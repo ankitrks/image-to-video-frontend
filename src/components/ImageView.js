@@ -18,11 +18,13 @@ const ImageView = () => {
   if (!media) return <div>Loading...</div>;
 
   return (
-    <div>
-      <h1>Media View</h1>
-      <img src={`http://localhost:8080${media.image}`} alt="Uploaded" />
-      {media.video && <video controls src={`http://localhost:8080${media.video}`} />}
-    </div>
+    <React.Fragment>
+      <div>
+        <h1>Media View</h1>
+        <img src={`${media.image}`} alt="Uploaded" style={{width: '250px'}}/>
+        <div>{media.video && <video controls src={`${media.video}`} />}</div>
+      </div>
+    </React.Fragment>
   );
 };
 

@@ -9,8 +9,8 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<UploadImage />} />
-        <Route path="/status/:id" component={ImageStatus} />
-        <Route path="/view/:id" component={ImageView} />
+        <Route path="/status/:id" element={<ImageStatus />} />
+        <Route path="/view/:id" element={<ImageView />} />
       </Routes>
     </div>
   );
