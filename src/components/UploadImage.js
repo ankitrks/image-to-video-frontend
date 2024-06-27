@@ -24,13 +24,15 @@ const UploadImage = () => {
   };
 
   return (
-    <div>
-      <h1>Upload Image</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleImageChange} />
-        <button type="submit">Upload</button>
-      </form>
-    </div>
+    <React.Fragment>
+      <div>
+        <h1>Upload Image</h1>
+        <form onSubmit={handleSubmit}>
+          <input type="file" onChange={handleImageChange} />
+          <button type="submit">Upload</button>
+        </form>
+      </div>
+    </React.Fragment>
   );
 };
 
