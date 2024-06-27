@@ -8,7 +8,7 @@ const ImageStatus = () => {
 
   useEffect(() => {
     const interval = setInterval(async () => {
-      const response = await axios.get(`http://localhost:8000/api/media/${id}/status/`);
+      const response = await axios.get(`http://localhost:8080/api/media/${id}/status/`);
       setStatus(response.data.status);
       if (response.data.status === 'completed') {
         clearInterval(interval);

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const UploadImage = () => {
   const [image, setImage] = useState(null);
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -16,7 +16,7 @@ const UploadImage = () => {
     formData.append('image', image);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/media/', formData);
+      const response = await axios.post('http://localhost:8080/api/media/', formData);
       history.push(`/status/${response.data.id}`);
     } catch (error) {
       console.error('Error uploading image', error);

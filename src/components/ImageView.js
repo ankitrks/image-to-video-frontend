@@ -8,7 +8,7 @@ const ImageView = () => {
 
   useEffect(() => {
     const fetchMedia = async () => {
-      const response = await axios.get(`http://localhost:8000/api/media/${id}/`);
+      const response = await axios.get(`http://localhost:8080/api/media/${id}/`);
       setMedia(response.data);
     };
 
@@ -20,8 +20,8 @@ const ImageView = () => {
   return (
     <div>
       <h1>Media View</h1>
-      <img src={`http://localhost:8000${media.image}`} alt="Uploaded" />
-      {media.video && <video controls src={`http://localhost:8000${media.video}`} />}
+      <img src={`http://localhost:8080${media.image}`} alt="Uploaded" />
+      {media.video && <video controls src={`http://localhost:8080${media.video}`} />}
     </div>
   );
 };
