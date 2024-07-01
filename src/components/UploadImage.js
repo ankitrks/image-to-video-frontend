@@ -1,39 +1,57 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const UploadImage = () => {
-  const [image, setImage] = useState(null);
-  const history = useNavigate();
+const ImageUpload = () => {
+  const [file, setFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [message, setMessage] = useState('');
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleUpload = async () => {
+    if (!file) return;
+
     const formData = new FormData();
-    formData.append('image', image);
+    formData.append('image', file);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/media/', formData);
-      history.push(`/status/${response.data.id}`);
+      const response = await axios.post('http://localhost:8080/api/media/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(percentCompleted);
+        },
+      });
+
+      setMessage(
+        'File uploaded successfully. <a target="_blank" href="/status/' +
+          response.data.id +
+          '/">view</a>'
+      );
     } catch (error) {
-      console.error('Error uploading image', error);
+      console.error('Error uploading file', error);
+      setMessage('Error uploading file');
     }
   };
 
   return (
-    <React.Fragment>
-      <div>
-        <h1>Upload Image</h1>
-        <form onSubmit={handleSubmit}>
-          <input type="file" onChange={handleImageChange} />
-          <button type="submit">Upload</button>
-        </form>
-      </div>
-    </React.Fragment>
+    <div>
+      <h1>Image Upload</h1>
+      <input type="file" onChange={handleFileChange} />
+      {file && (
+        <div>
+          <progress value={uploadProgress} max="100" />
+          <span>{uploadProgress}%</span>
+        </div>
+      )}
+      <button onClick={handleUpload}>Upload</button>
+      {message && <p dangerouslySetInnerHTML={{ __html: message }}></p>}
+    </div>
   );
 };
 
-export default UploadImage;
+export default ImageUpload;
